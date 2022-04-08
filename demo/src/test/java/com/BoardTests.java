@@ -1,4 +1,4 @@
-package com.example.board;
+package com;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.entity.Board;
-import com.example.entity.BoardRepository;
+import com.board.entity.Board;
+import com.board.entity.BoardRepository;
 
 @SpringBootTest
 public class BoardTests {
