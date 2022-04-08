@@ -2,12 +2,14 @@ package com.board.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.board.dto.BoardRequestDto;
@@ -24,19 +26,27 @@ public class BoardApiController {
 	private final BoardService boardService;
 
 	/**
+	 * 게시글 리스트 조회
+	 */
+	@GetMapping("/boards")
+	public List<BoardResponseDto> findAll(@RequestParam final char delYn) {
+		return boardService.findAllByDelYn(delYn);
+	}
+	
+	/**
+     * 게시글 상세정보 조회
+     */
+    @GetMapping("/boards/{id}")
+    public BoardResponseDto findById(@PathVariable final int id) {
+        return boardService.findById(id);
+    }
+    
+	/**
 	 * 게시글 생성
 	 */
 	@PostMapping("/boards")
 	public Integer save(@RequestBody final BoardRequestDto params) {
 		return boardService.save(params);
-	}
-
-	/**
-	 * 게시글 리스트 조회
-	 */
-	@GetMapping("/boards")
-	public List<BoardResponseDto> findAll() {
-		return boardService.findAll();
 	}
 
 	/**
@@ -47,8 +57,11 @@ public class BoardApiController {
 		return boardService.update(id, params);
 	}
 
-//	@GetMapping("/test")
-//	public String main() {
-//		throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
-//	}
+	/**
+     * 게시글 삭제
+     */
+    @DeleteMapping("/boards/{id}")
+    public Integer delete(@PathVariable final int id) {
+        return boardService.delete(id);
+    }
 }
