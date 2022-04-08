@@ -4,7 +4,9 @@ import java.time.LocalDateTime;
 
 import com.board.entity.Board;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * Entity 클래스에서 테이블 또는 레코드 역할을 하지만 요청(Request)/응답(Response) 사용이 안되기 때문에
@@ -14,6 +16,7 @@ import lombok.Getter;
  */
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardResponseDto {
 	private Integer id; // PK
     private String title; // 제목
