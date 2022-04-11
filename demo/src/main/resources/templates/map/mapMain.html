@@ -1,39 +1,18 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-	<!--<link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">-->
+	<jsp:include page="/script_include.html" />
 	<script src="/plugin/openlayers-4.6.5/build/jsts.min.js"></script>
 	<script src="/plugin/openlayers-4.6.5/build/ol.js"></script>
 	<script src="/plugin/openlayers-4.6.5/build/ol-ext.min.js"></script>
 	<script src="/plugin/openlayers-4.6.5/build/turf.min.js"></script>
 	<script src="/plugin/proj4/proj4.js"></script>
+	<script src="/scripts/map/fn_main.js"></script>
 	<title>지도서비스</title>
 </head>
 
 <body>
 	<div id="map" class="map"></div>
 </body>
-
-<script>
-	const vworldImageUrl = 'http://xdworld.vworld.kr:8080/2d/Base/201612/{z}/{x}/{y}.png';
-	var map = new ol.Map({
-		target: 'map',
-		layers: [
-			new ol.layer.Tile({
-				source: new ol.source.XYZ({
-					url: 'http://xdworld.vworld.kr:8080/2d/Base/202002/{z}/{x}/{y}.png'
-				})
-			})
-		],
-		view: new ol.View({
-			center: [14233127.961095788, 4321508.791022108],
-			zoom: 8,
-			minZoom: 8,
-			maxZoom: 19
-		}),
-		controls: []
-	});
-</script>
 
 </html>
