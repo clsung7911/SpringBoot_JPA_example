@@ -242,15 +242,21 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
 
-	$('.right-area>ul a').on('click', function(e) {
-		e.preventDefault();
-		if ($(this).parent('li').hasClass('on')) {
-			$(this).parent('li').removeClass('on');
-		} else {
-			$(this).parent('li').addClass('on').siblings().removeClass('on');
-		}
+	// 툴바 중복 열기 제어
+	let list = document.querySelectorAll('.right-area>ul a');
+	[].forEach.call(list, function(e){
+		e.addEventListener('click', click, false);
 	});
-	//right-area 버튼 클릭시  새로고침 삭제 및 기능
+	click = (e) =>{
+		if(e.target.parentElement.classList.contains('on')){
+			e.target.parentElement.classList.remove('on');
+		}else{
+			for(let i=0;i<e.target.parentElement.parentElement.childElementCount;i++){
+				e.target.parentElement.parentElement.children[i].classList.remove('on');
+			}
+			e.target.parentElement.classList.add('on');
+		}
+	}
 
 });
 
@@ -353,49 +359,23 @@ function imgSavePrint(actionType) {
 	});
 }
 
-//지도 이미지 다운로드시 log
-function fnExcelDownLoadLog(type) {
-	var fctNm = '배경지도이미지 다운로드';
-	if (type == "print") {
-		fctNm = '배경지도이미지 출력';
-	}
-	var fctUrl = '/main/main.do';
-
-	var params = {};
-	params["fctNm"] = fctNm;
-	params["fctUrl"] = fctUrl;
-
-	var url = "/biz/si/main/fileDownloadInsertLog.do";
-	$.ajax({
-		type: "POST",
-		url: url,
-		data: params,
-		dataType: 'json',
-		error: function(xhr, status, error) {
-			console.log(error);
-			$("#loading").hide();
-			popupAlertConfirm('alert', 'alertChk', '처리 중 오류가 발생하였습니다.');
-		}
-	});
-};
-
 /* 이미지저장, 인쇄 관련 스크립트 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
-var getMapImgUrl = function(isCompress) {
-	var dfd = $.Deferred();
-	html2canvas($("#map .ol-viewport .ol-unselectable")[0]).then(
-		function(canvas) {
-			var _imgDataUrl = canvas.toDataURL('image/png');
-			if (isCompress == true) {
-				var _imageSize = Math.round((_imgDataUrl.length - ('data:image/png;base64,').length) * 3 / 4) / 1024;
-				var _qulity = 1;
-				while (_imageSize >= 1530) {
-					_imgDataUrl = canvas.toDataURL('image/jpeg', _qulity);
-					_imageSize = Math.round((_imgDataUrl.length - ('data:image/jpeg;base64,').length) * 3 / 4) / 1024;
-					_qulity -= 0.1;
-					if (_qulity < 1) break;
-				}
-			}
-			dfd.resolve(_imgDataUrl);
-		});
-	return dfd.promise();
-}
+//var getMapImgUrl = function(isCompress) {
+//	var dfd = $.Deferred();
+//	html2canvas($("#map .ol-viewport .ol-unselectable")[0]).then(
+//		function(canvas) {
+//			var _imgDataUrl = canvas.toDataURL('image/png');
+//			if (isCompress == true) {
+//				var _imageSize = Math.round((_imgDataUrl.length - ('data:image/png;base64,').length) * 3 / 4) / 1024;
+//				var _qulity = 1;
+//				while (_imageSize >= 1530) {
+//					_imgDataUrl = canvas.toDataURL('image/jpeg', _qulity);
+//					_imageSize = Math.round((_imgDataUrl.length - ('data:image/jpeg;base64,').length) * 3 / 4) / 1024;
+//					_qulity -= 0.1;
+//					if (_qulity < 1) break;
+//				}
+//			}
+//			dfd.resolve(_imgDataUrl);
+//		});
+//	return dfd.promise();
+//}

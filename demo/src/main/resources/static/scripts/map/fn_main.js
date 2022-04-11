@@ -13,9 +13,11 @@
 ---------- ------ --------------
 2022-04-11 이성준 최초작성
 ********************************************/
+const vworldImageUrl = 'http://xdworld.vworld.kr:8080/2d/Base/201612/{z}/{x}/{y}.png';
+let map;
+
 document.addEventListener("DOMContentLoaded", () => {
-	const vworldImageUrl = 'http://xdworld.vworld.kr:8080/2d/Base/201612/{z}/{x}/{y}.png';
-	let map = new ol.Map({
+	map = new ol.Map({
 		target: 'map',
 		layers: [
 			new ol.layer.Tile({
