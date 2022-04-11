@@ -22,7 +22,7 @@ public class BoardPageController {
      * 게시글 등록 페이지
      */
     @GetMapping("/write")
-    public String openBoardWrite(@RequestParam(required = false) final int id, Model model) {
+    public String openBoardWrite(@RequestParam(required = false, defaultValue="0") final int id, Model model) {
     	model.addAttribute("id", id);
         return "board/write";
     }
