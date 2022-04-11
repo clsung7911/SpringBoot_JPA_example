@@ -9,13 +9,14 @@
 	<meta content="" name="author" />
 	<link rel="stylesheet" th:href="@{/css/style.css}" />
 	<link rel="stylesheet" th:href="@{/plugin/mCustomScrollbar/jquery.mCustomScrollbar.min.css}" />
-	<title>JPA 게시판</title>
+	<title>게시판</title>
 </head>
 
 <body>
 	<div class="fixed-navbar">
 		<div class="pull-left">
-			<h1 class="page-title">Board</h1>
+			<h1 class="page-title" onclick="goList();" style="cursor: pointer;">Board</h1>
+			<h1 class="page-title" onclick="window.open('/map/main', '_blank');" style="cursor: pointer;">MapService</h1>
 		</div>
 	</div>
 	<div id="wrapper">
@@ -35,12 +36,16 @@
 			</div>
 			<footer class="footer">
 				<ul class="list-inline">
-					<li>2016 © NinjaAdmin.</li>
+					<li>E-main : clsung7911@gmail.com</li><br>
+					<li><a href="https://github.com/clsung7911" target="_blank">Github : clsung7911</a></li><br>
+					<li><a href="https://clsung.tistory.com" target="_blank">Blog : clsung.tistory.com</a></li><br>
+					<li>2022 © clsung.</li>
 				</ul>
 			</footer>
 		</div>
 	</div>
 
+	<script th:src="@{/scripts/board/layout.js}"></script>
 	<script th:src="@{/scripts/moment.min.js}"></script>
 	<script th:src="@{/scripts/jquery.min.js}"></script>
 	<script th:src="@{/scripts/main.js}"></script>
@@ -48,7 +53,9 @@
 	<script th:src="@{/plugin/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js}"></script>
 
 	<!--/* JavaScript 영역 */-->
-	<th:block layout:fragment="script"></th:block>
+	<th:block layout:fragment="script">
+		
+	</th:block>
 </body>
 
 </html>
