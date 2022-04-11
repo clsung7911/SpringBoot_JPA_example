@@ -2,14 +2,15 @@
 <html>
 
 <head>
+	<link rel="stylesheet" href="/css/core.css" type="text/css">
+	<link rel="stylesheet" href="/css/map-style.css" type="text/css">
 	<script src="/plugin/openlayers-4.6.5/build/jsts.min.js"></script>
 	<script src="/plugin/openlayers-4.6.5/build/ol.js"></script>
 	<script src="/plugin/openlayers-4.6.5/build/ol-ext.min.js"></script>
 	<script src="/plugin/openlayers-4.6.5/build/turf.min.js"></script>
 	<script src="/plugin/proj4/proj4.js"></script>
 	<script src="/scripts/map/fn_main.js"></script>
-	<link rel="stylesheet" href="/css/core.css" type="text/css">
-	<link rel="stylesheet" href="/css/map-style.css" type="text/css">
+	<script src="/scripts/map/fn_toolbar.js"></script>
 	<title>지도서비스</title>
 </head>
 
@@ -18,7 +19,7 @@
 		<div id="map" class="map"></div>
 		<div class="right-area">
 			<ul class="t-function">
-				<li class="south" title="전체화면"><a href="" id="tool_home" class="map-all"><span class="hidden">전체화면</span></a></li>
+				<li class="south" title="전체화면"><a href="javascript:void(0);" id="tool_home" class="map-all"><span class="hidden">전체화면</span></a></li>
 				<li class="south" title="초기화"><a href="" id="tool_clear" class="map-clear"><span class="hidden">초기화</span></a></li>
 				<li class="has-depth south" title="배경지도"><a href="" class="map-style"><span class="hidden">배경지도</span></a>
 					<ul>
