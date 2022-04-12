@@ -35,7 +35,7 @@ public class BoardService {
      */
     public List<BoardResponseDto> findAll() {
     	//sort 객체는 ORDER BY id DESC, registDt DESC을 의미
-        Sort sort = Sort.by(Direction.DESC, "id", "registDt");
+        Sort sort = Sort.by(Direction.DESC, "boardId", "registDt");
         List<Board> list = boardRepository.findAll(sort);
         return list.stream().map(BoardResponseDto::new).collect(Collectors.toList());
     }
@@ -44,8 +44,8 @@ public class BoardService {
     * 게시글 상세정보 조회
     */
    @Transactional
-   public BoardResponseDto findById(final int id) {
-       Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+   public BoardResponseDto findById(final int boardId) {
+       Board entity = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
        entity.increaseHits();
        return new BoardResponseDto(entity);
    }
@@ -54,7 +54,7 @@ public class BoardService {
     * 게시글 리스트 조회 - (삭제 여부 기준)
     */
    public List<BoardResponseDto> findAllByDelYn(final char delYn) {
-       Sort sort = Sort.by(Direction.DESC, "id", "registDt");
+       Sort sort = Sort.by(Direction.DESC, "boardId", "registDt");
        List<Board> list = boardRepository.findAllByDelYn(delYn, sort);
        return list.stream().map(BoardResponseDto::new).collect(Collectors.toList());
    }
@@ -69,28 +69,28 @@ public class BoardService {
     public Integer save(final BoardRequestDto params) {
     	// Entity 클래스에서는 절대 요청/응답 사용 안되기에 DTO에서 실행
         Board entity = boardRepository.save(params.toEntity());
-        return entity.getId();
+        return entity.getBoardId();
     }
 
     /**
      * 게시글 수정
      */
     @Transactional
-    public Integer update(final int id, final BoardRequestDto params) {
+    public Integer update(final int boardId, final BoardRequestDto params) {
     	// Entity 클래스의 레코드를 가지고 update 처리하는 기능
-        Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
-        entity.update(params.getTitle(), params.getContents(), params.getWriter());
-        return id;
+        Board entity = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        entity.update(params.getTitle(), params.getContents(), params.getUserId());
+        return boardId;
     }
     
     /**
      * 게시글 삭제
      */
     @Transactional
-    public Integer delete(final int id) {
-        Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+    public Integer delete(final int boardId) {
+        Board entity = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
         entity.delete();
-        return id;
+        return boardId;
     }
     
     /**

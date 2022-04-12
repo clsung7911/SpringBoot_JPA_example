@@ -4,10 +4,11 @@
 
     <!-- SELECT 결과 Map -->
     <resultMap id="BoardResultMap" type="com.board.dto.BoardResponseDto">
-        <result property="id"            column="id" />
+        <result property="boardId"            column="board_id" />
         <result property="title"         column="title" />
         <result property="contents"       column="contents" />
-        <result property="writer"        column="writer" />
+        <result property="userId"        column="user_id" />
+        <result property="userNm"        column="user_nm" />
         <result property="hits"          column="hits" />
         <result property="delYn"      column="del_yn" />
         <result property="registDt"   column="regist_dt" />
@@ -24,7 +25,7 @@
                  AND (
                    title LIKE CONCAT('%', #{keyword}, '%')
                    OR contents LIKE CONCAT('%', #{keyword}, '%')
-                   OR writer LIKE CONCAT('%', #{keyword}, '%')
+                   OR user_id LIKE CONCAT('%', #{keyword}, '%')
                 )
                 </when>
                 <otherwise>
@@ -37,8 +38,8 @@
                         AND contents LIKE CONCAT('%', #{keyword}, '%')
                         </when>
 
-                        <when test="searchType.equals('writer')">
-                        AND writer LIKE CONCAT('%', #{keyword}, '%')
+                        <when test="searchType.equals('userId')">
+                        AND user_id LIKE CONCAT('%', #{keyword}, '%')
                         </when>
                     </choose>
                 </otherwise>
@@ -59,10 +60,11 @@
     <!-- 게시글 리스트 조회 -->
     <select id="findAll" parameterType="com.board.paging.CommonPaging" resultMap="BoardResultMap">
         SELECT
-            id
+            board_id
           , title
           , contents
-          , writer
+          , user_id
+          , user_nm
           , hits
           , del_yn
           , regist_dt
@@ -71,7 +73,7 @@
             board
         <include refid="conditions" />
         ORDER BY
-            id DESC, regist_dt DESC
+            board_id DESC, regist_dt DESC
         LIMIT #{recordPerPage} OFFSET #{pagination.limitStart}
     </select>
 

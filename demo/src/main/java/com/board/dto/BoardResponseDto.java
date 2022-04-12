@@ -18,20 +18,22 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardResponseDto {
-	private Integer id; // PK
+	private Integer boardId; // PK
     private String title; // 제목
     private String contents; // 내용
-    private String writer; // 작성자
+    private String userId; // 작성자ID
+    private String userNm; // 작성자명
     private int hits; // 조회 수
     private char delYn; // 삭제 여부
     private LocalDateTime registDt = LocalDateTime.now(); // 생성일
     private LocalDateTime updtDt; // 수정일
     
     public BoardResponseDto(Board entity) {
-    	this.id = entity.getId();
+    	this.boardId = entity.getBoardId();
     	this.title = entity.getTitle();
     	this.contents = entity.getContents();
-    	this.writer = entity.getWriter();
+    	this.userId = entity.getUserId();
+    	this.userNm = entity.getUserNm();
     	this.hits = entity.getHits();
     	this.delYn = entity.getDelYn();
     	this.registDt = entity.getRegistDt();

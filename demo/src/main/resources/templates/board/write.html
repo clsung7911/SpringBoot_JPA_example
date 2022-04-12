@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <th:block layout:fragment="content">
 	<div class="card-content">
 		<form id="form" class="form-horizontal">
@@ -9,10 +9,18 @@
 					<input type="text" id="title" class="form-control" placeholder="제목을 입력해 주세요." />
 				</div>
 			</div>
+			
 			<div class="form-group">
-				<label for="writer" class="col-sm-2 control-label">이름</label>
+				<label for="userId" class="col-sm-2 control-label">작성자ID</label>
 				<div class="col-sm-10">
-					<input type="text" id="writer" class="form-control" placeholder="이름을 입력해 주세요." />
+					<input type="text" id="userId" class="form-control" value="clsung" disabled/>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="userNm" class="col-sm-2 control-label">작성자명</label>
+				<div class="col-sm-10">
+					<input type="text" id="userNm" class="form-control" value="이성준" disabled/>
 				</div>
 			</div>
 
@@ -66,7 +74,7 @@
 		   		const form = document.getElementById('form');
 		   		form.title.value = json.title;
 		   		form.contents.value = json.contents;
-		   		form.writer.value = json.writer;
+		   		form.userId.value = json.userId;
 
 		   	}).catch(error => {
 		    	alert('게시글 정보를 찾을 수 없습니다.');
@@ -87,10 +95,10 @@
 				return false;
 			}
 
-			if (!form.writer.value.trim()) {
+			if (!form.userId.value.trim()) {
 				alert('작성자를 입력해 주세요.');
-				form.writer.value = '';
-				form.writer.focus();
+				form.userId.value = '';
+				form.userId.focus();
 				return false;
 			}
 
@@ -116,7 +124,8 @@
 			const form = document.getElementById('form');
 			const params = {
 				title: form.title.value,
-				writer: form.writer.value,
+				userId: form.userId.value,
+				userNm: form.userNm.value,
 				contents: form.contents.value,
 				delYn: 'N'
 			};

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<link rel="stylesheet" href="/css/core.css" type="text/css">
 	<link rel="stylesheet" href="/css/map-style.css" type="text/css">
@@ -10,6 +9,7 @@
 	<script src="/plugin/openlayers-4.6.5/build/turf.min.js"></script>
 	<script src="/plugin/proj4/proj4.js"></script>
 	<script src="/scripts/map/fn_main.js"></script>
+	<script src="/scripts/map/cmm/fn_commons.js"></script>
 	<script src="/scripts/map/cmm/fn_toolbar.js"></script>
 	<title>지도서비스</title>
 </head>
@@ -19,37 +19,37 @@
 		<div id="map" class="map"></div>
 		<div class="right-area">
 			<ul class="t-function">
-				<li class="south" title="전체화면"><a href="javascript:void(0);" id="tool_home" class="map-all"><span class="hidden">전체화면</span></a></li>
-				<li class="south" title="초기화"><a href="javascript:void(0);" id="tool_clear" class="map-clear"><span class="hidden">초기화</span></a></li>
-				<li class="has-depth south" title="배경지도"><a href="javascript:void(0);" class="map-style"><span class="hidden">배경지도</span></a>
+				<li title="전체화면"><a href="javascript:void(0);" onclick="goHome();" class="map-all"><span class="hidden">전체화면</span></a></li>
+				<li title="초기화"><a href="javascript:void(0);" onclick="setClear();" class="map-clear"><span class="hidden">초기화</span></a></li>
+				<li class="has-depth" title="배경지도"><a href="javascript:void(0);" class="map-style"><span class="hidden">배경지도</span></a>
 					<ul>
-						<li class="south" title="일반지도"><a href="javascript:void(0);" id="tool_daum"><span class="hidden">일반지도</span></a></li>
-						<li class="south" title="위성지도"><a href="javascript:void(0);" id="tool_daumSatelite"><span class="hidden">위성지도</span></a></li>
+						<li title="일반지도"><a href="javascript:void(0);" onclick="setBaseMap('vworld', this);"><span class="hidden">일반지도</span></a></li>
+						<li title="위성지도"><a href="javascript:void(0);" onclick="setBaseMap('satellite', this);"><span class="hidden">위성지도</span></a></li>
 					</ul>
 				</li>
-				<li class="has-depth south" title="측정도구"><a href="javascript:void(0);" class="map-range"><span class="hidden">측정도구</span></a>
+				<li class="has-depth" title="측정도구"><a href="javascript:void(0);" class="map-range"><span class="hidden">측정도구</span></a>
 					<ul>
-						<li class="south" title="거리측정"><a href="javascript:void(0);" id="tool_distance"><span class="hidden">거리측정</span></a></li>
-						<li class="south" title="면적측정"><a href="javascript:void(0);" id="tool_area"><span class="hidden">면적측정</span></a></li>
+						<li title="거리측정"><a href="javascript:void(0);" onclick="setRange('distance', this);"><span class="hidden">거리측정</span></a></li>
+						<li title="면적측정"><a href="javascript:void(0);" onclick="setRange('area', this);"><span class="hidden">면적측정</span></a></li>
 					</ul>
 				</li>
-				<li class="has-depth south" title="그리기도구"><a href="javascript:void(0);" class="map-drow"><span class="hidden">그리기도구</span></a>
+				<li class="has-depth" title="그리기도구"><a href="javascript:void(0);" class="map-draw"><span class="hidden">그리기도구</span></a>
 					<ul>
-						<li class="south" title="점"><a href="javascript:void(0);" id="tool_point"><span class="hidden">점</span></a></li>
-						<li class="south" title="선"><a href="javascript:void(0);" id="tool_polyline"><span class="hidden">선</span></a></li>
-						<li class="south" title="면"><a href="javascript:void(0);" id="tool_polygon"><span class="hidden">면</span></a></li>
+						<li title="점"><a href="javascript:void(0);" onclick="setDraw('point', this);"><span class="hidden">점</span></a></li>
+						<li title="선"><a href="javascript:void(0);" onclick="setDraw('polyline', this);"><span class="hidden">선</span></a></li>
+						<li title="면"><a href="javascript:void(0);" onclick="setDraw('polygon', this);"><span class="hidden">면</span></a></li>
 					</ul>
 				</li>
-				<li class="has-depth south" title="인쇄"><a href="javascript:void(0);" class="map-print"><span class="hidden">인쇄</span></a>
+				<li class="has-depth" title="인쇄"><a href="javascript:void(0);" class="map-print"><span class="hidden">인쇄</span></a>
 					<ul>
-						<li class="south" title="화면출력"><a href="javascript:void(0);" id="tool_imgPrint"><span class="hidden">화면출력</span></a></li>
-						<li class="south" title="이미지저장"><a href="javascript:void(0);" id="tool_imgSave"><span class="hidden">이미지저장</span></a></li>
+						<li title="화면출력"><a href="javascript:void(0);" onclick="setPrint('imgPrint', this);"><span class="hidden">화면출력</span></a></li>
+						<li title="이미지저장"><a href="javascript:void(0);" onclick="setPrint('imgSave', this);"><span class="hidden">이미지저장</span></a></li>
 					</ul>
 				</li>
-				<li class="south group" title="확대" style="border-radius: 5px 5px 0 0;"><a href="javascript:void(0);" id="tool_zoomup" class="map-zoom-up"><span class="hidden">확대</span></a></li>
-				<li class="south group" title="축소"><a href="javascript:void(0);" id="tool_zoomdown" class="map-zoom-down"><span class="hidden">축소</span></a></li>
-				<li class="south group" title="이전"><a href="javascript:void(0);" id="tool_previous" class="map-pre"><span class="hidden">이전</span></a></li>
-				<li class="south group" title="다음"><a href="javascript:void(0);" id="tool_next" class="map-post"><span class="hidden">다음</span></a></li>
+				<li class=" group" title="확대" style="border-radius: 5px 5px 0 0;"><a href="javascript:void(0);" onclick="setZoom('up');" class="map-zoom-up"><span class="hidden">확대</span></a></li>
+				<li class=" group" title="축소"><a href="javascript:void(0);" onclick="setZoom('down');" class="map-zoom-down"><span class="hidden">축소</span></a></li>
+				<li class=" group" title="이전"><a href="javascript:void(0);" onclick="setMove('previous');" class="map-pre"><span class="hidden">이전</span></a></li>
+				<li class=" group" title="다음"><a href="javascript:void(0);" onclick="setMove('next');" class="map-post"><span class="hidden">다음</span></a></li>
 			</ul>
 		</div>
 	</div>

@@ -18,14 +18,16 @@ import lombok.NoArgsConstructor;
 public class BoardRequestDto {
 	private String title; // 제목
     private String contents; // 내용
-    private String writer; // 작성자
+    private String userId; // 작성자ID
+    private String userNm; // 작성자명
     private char delYn; // 삭제 여부
 
     public Board toEntity() {
         return Board.builder()
                 .title(title)
                 .contents(contents)
-                .writer(writer)
+                .userId(userId)
+                .userNm(userNm)
                 .hits(0)
                 .delYn(delYn)
                 .build();

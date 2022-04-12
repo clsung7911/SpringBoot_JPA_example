@@ -24,7 +24,7 @@ public class BoardTests {
         Board params = Board.builder()
                 .title("1번 게시글 제목")
                 .contents("1번 게시글 내용")
-                .writer("도뎡이")
+                .userId("도뎡이")
                 .hits(0)
                 .delYn('N')
                 .build();
@@ -36,7 +36,7 @@ public class BoardTests {
         Board entity = boardRepository.findById((int) 1).get();
         assertThat(entity.getTitle()).isEqualTo("1번 게시글 제목");
         assertThat(entity.getContents()).isEqualTo("1번 게시글 내용");
-        assertThat(entity.getWriter()).isEqualTo("도뎡이");
+        assertThat(entity.getUserId()).isEqualTo("도뎡이");
     }
 
     @Test

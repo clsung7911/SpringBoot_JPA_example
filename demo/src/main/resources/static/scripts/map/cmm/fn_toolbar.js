@@ -13,260 +13,121 @@
 ---------- ------ --------------
 2022-04-11 이성준 최초작성
 ********************************************/
+
+let drawLayer;
+
 document.addEventListener("DOMContentLoaded", () => {
-
-	/*************************************************************
-	 * 툴박스 이벤트 모음
-	 ************************************************************/
-
-	const toolHome = document.getElementById("tool_home");
-	const toolClear = document.getElementById("tool_clear");
-	const toolDistance = document.getElementById("tool_distance");
-	const toolArea = document.getElementById("tool_area");
-	const toolPoint = document.getElementById("tool_point");
-	const toolPolyline = document.getElementById("tool_polyline");
-	const toolPolygon = document.getElementById("tool_polygon");
-	const toolImgPrint = document.getElementById("tool_imgPrint");
-	const toolImgSave = document.getElementById("tool_imgSave");
-	const toolDaum = document.getElementById("tool_daum");
-	const toolDaumSatelite = document.getElementById("tool_daumSatelite");
-	const toolZoomUp = document.getElementById("tool_zoomup");
-	const toolZoomDown = document.getElementById("tool_zoomdown");
-	const toolPre = document.getElementById("tool_previous");
-	const toolNext = document.getElementById("tool_next");
-
-	//전체화면
-	toolHome.addEventListener("click", function(e) {
-		map.getView().animate({ center: [14233127.961095788, 4321508.791022108], zoom: 8, duration: 200 });
-	});
-	//초기화
-	toolClear.addEventListener("click", function(e) {
-		//모두지우기
-
-	});
-	//거리측정
-	toolDistance.addEventListener("click", function(e) {
-		// 해당 버튼 외에 다른게 클릭되어있으면 return
-		if (toolArea.className.indexOf("_on") != -1 ||
-			toolPoint.className.indexOf("_on") != -1 ||
-			toolPolyline.className.indexOf("_on") != -1 ||
-			toolPolygon.className.indexOf("_on") != -1) {
-			alert('선택한 버튼을 해제하세요.');
-			return;
-		}
-
-		if (this.className.indexOf("_on") != -1) {
-			this.className = 'icon1 north icon1';
-		} else {
-			this.className = 'icon1 north icon1_on';
-		}
-
-		if (this.className.indexOf("_on") != -1) { // 클릭됬으면
-			wavus.draw.addDraw('LineString').then(function(draw) {
-				draw.on("drawend", function(e) {
-					e.feature.setProperties({
-						'feature_type': 'measure'
-					});
-					wavus.draw.removeDraw();
-					tool_distance.className = 'icon1 north icon1';
-				});
-				wavus.measure.addMeasure(draw);
-			});
-		} else {
-			wavus.draw.removeDraw();
-		}
-	});
-	//면적측정
-	toolArea.addEventListener("click", function(e) {
-		// 해당 버튼 외에 다른게 클릭되어있으면 return
-		if (toolDistance.className.indexOf("_on") != -1 ||
-			toolPoint.className.indexOf("_on") != -1 ||
-			toolPolyline.className.indexOf("_on") != -1 ||
-			toolPolygon.className.indexOf("_on") != -1) {
-			popupAlertConfirm('alert', 'alertChk', '선택한 버튼을 해제하세요.');
-			return;
-		}
-
-		if (this.className.indexOf("_on") != -1) {
-			this.className = 'icon2 north icon2';
-		} else {
-			this.className = 'icon2 north icon2_on';
-		}
-
-		if (this.className.indexOf("_on") != -1) { // 클릭됬으면
-			wavus.draw.addDraw('Polygon').then(function(draw) {
-				draw.on("drawend", function(e) {
-					e.feature.setProperties({
-						'feature_type': 'measure'
-					});
-					wavus.draw.removeDraw();
-					toolArea.className = 'icon2 north icon2';
-				});
-				wavus.measure.addMeasure(draw);
-			});
-		} else {
-			wavus.draw.removeDraw();
-		}
-	});
-	//점
-	toolPoint.addEventListener("click", function(e) {
-		// 해당 버튼 외에 다른게 클릭되어있으면 return
-		if (toolDistance.className.indexOf("_on") != -1 ||
-			toolArea.className.indexOf("_on") != -1 ||
-			toolPolyline.className.indexOf("_on") != -1 ||
-			toolPolygon.className.indexOf("_on") != -1) {
-			popupAlertConfirm('alert', 'alertChk', '선택한 버튼을 해제하세요.');
-			return;
-		}
-
-		if (this.className.indexOf("_on") != -1) {
-			this.className = 'icon3 north icon3';
-		} else {
-			this.className = 'icon3 north icon3_on';
-		}
-
-		if (this.className.indexOf("_on") != -1) { // 클릭됬으면
-			wavus.draw.addDraw("Point").then(function(draw) {
-				draw.on("drawend", function(e) {
-					e.feature.setProperties({
-						'feature_type': 'draw'
-					});
-					wavus.draw.removeDraw();
-					toolPoint.className = 'icon3 north icon3';
-				});
-			});
-		} else {
-			wavus.draw.removeDraw();
-		}
-
-	});
-	//선
-	toolPolyline.addEventListener("click", function(e) {
-		// 해당 버튼 외에 다른게 클릭되어있으면 return
-		if (toolDistance.className.indexOf("_on") != -1 ||
-			toolArea.className.indexOf("_on") != -1 ||
-			toolPoint.className.indexOf("_on") != -1 ||
-			toolPolygon.className.indexOf("_on") != -1) {
-			popupAlertConfirm('alert', 'alertChk', '선택한 버튼을 해제하세요.');
-			return;
-		}
-
-		if (this.className.indexOf("_on") != -1) {
-			this.className = 'icon4 north icon4';
-		} else {
-			this.className = 'icon4 north icon4_on';
-		}
-
-		if (this.className.indexOf("_on") != -1) { // 클릭됬으면
-			wavus.draw.addDraw("LineString").then(function(draw) {
-				draw.on("drawend", function(e) {
-					e.feature.setProperties({
-						'feature_type': 'draw'
-					});
-					wavus.draw.removeDraw();
-					toolPolyline.className = 'icon4 north icon4';
-				});
-			});
-		} else {
-			wavus.draw.removeDraw();
-		}
-	});
-	//면
-	toolPolygon.addEventListener("click", function(e) {
-		// 해당 버튼 외에 다른게 클릭되어있으면 return
-		if (toolDistance.className.indexOf("_on") != -1 ||
-			toolArea.className.indexOf("_on") != -1 ||
-			toolPoint.className.indexOf("_on") != -1 ||
-			toolPolyline.className.indexOf("_on") != -1) {
-			popupAlertConfirm('alert', 'alertChk', '선택한 버튼을 해제하세요.');
-			return;
-		}
-
-		if (this.className.indexOf("_on") != -1) {
-			this.className = 'icon5 north icon5';
-		} else {
-			this.className = 'icon5 north icon5_on';
-		}
-
-		if (this.className.indexOf("_on") != -1) { // 클릭됬으면
-			wavus.draw.addDraw("Box").then(function(draw) {
-				draw.on("drawend", function(e) {
-					e.feature.setProperties({
-						'feature_type': 'draw'
-					});
-					wavus.draw.removeDraw();
-					toolPolygon.className = 'icon5 north icon5';
-				});
-			});
-		} else {
-			wavus.draw.removeDraw();
-		}
-	});
-	//이미지인쇄
-	toolImgPrint.addEventListener("click", function(e) {
-		imgSavePrint("print");
-	});
-	//이미지저장
-	toolImgSave.addEventListener("click", function(e) {
-		imgSavePrint("image");
-	});
-	//배경지도-다음
-	toolDaum.addEventListener("click", function(e) {
-		wavus.controller.bgMapChange("daum");
-	});
-	//배경지도-위성
-	toolDaumSatelite.addEventListener("click", function(e) {
-		wavus.controller.bgMapChange("daumSatellite");
-	});
-	//확대
-	toolZoomUp.addEventListener("click", function(e) {
-		let view = wavus.map.getMap().getView();
-		let zoom = wavus.map.getMap().getView().getZoom();
-
-		view.setZoom(zoom + 1);
-	});
-	//축소
-	toolZoomDown.addEventListener("click", function(e) {
-		let view = wavus.map.getMap().getView();
-		let zoom = wavus.map.getMap().getView().getZoom();
-
-		view.setZoom(zoom - 1);
-	});
-	//이전
-	toolPre.addEventListener("click", function(e) {
-		wavus.controller.goPrevNext("prev");
-	});
-	//다음
-	toolNext.addEventListener("click", function(e) {
-		wavus.controller.goPrevNext("next");
-	});
-
-
 	// 툴바 중복 열기 제어
 	let list = document.querySelectorAll('.right-area>ul a');
-	[].forEach.call(list, function(e){
-		e.addEventListener('click', click, false);
-	});
-	click = (e) =>{
-		if(e.target.parentElement.classList.contains('on')){
+
+	click = (e) => {
+		if (e.target.parentElement.classList.contains('on')) {
 			e.target.parentElement.classList.remove('on');
-		}else{
-			for(let i=0;i<e.target.parentElement.parentElement.childElementCount;i++){
+		} else {
+			for (let i = 0; i < e.target.parentElement.parentElement.childElementCount; i++) {
 				e.target.parentElement.parentElement.children[i].classList.remove('on');
 			}
 			e.target.parentElement.classList.add('on');
 		}
 	}
 
-});
+	[].forEach.call(list, function(e) {
+		e.addEventListener('click', click, false);
+	});
 
-/* 이미지저장, 인쇄 관련 스크립트 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
+
+});
+/**
+ * 전체화면
+ */
+goHome = () => {
+	map.getView().animate({ center: [14233127.961095788, 4321508.791022108], zoom: 8, duration: 200 });
+}
+
+/**
+ * 초기화
+ */
+setClear = () => {
+
+}
+
+/**
+ * 배경지도
+ * params : daum - 일반지도
+ * params : satelite - 위성지도
+ */
+setBaseMap = (params) => {
+	map.getLayers().forEach((v, i) => {
+		v.setVisible(false);
+	});
+	if (params == 'satellite') {
+		getLayerId('hybrid').setVisible(true);
+	}
+	getLayerId(params).setVisible(true);
+}
+
+/**
+ * 측정도구
+ * params : distance - 거리측정
+ * params : area - 면적측정
+ */
+setRange = (params, vthis) => {
+	
+}
+
+/**
+ * 그리기도구
+ * params : point - 점
+ * params : polyline - 선
+ * params : polygon - 면
+ */
+setDraw = (params) => {
+
+}
+
+/**
+ * 인쇄도구
+ * params : image - 저장
+ * params : print - 인쇄
+ */
+setPrint = (params) => {
+	if (params == 'imgSave') {
+		imgSavePrint("image");
+	} else {
+		imgSavePrint("print");
+	}
+}
+
+/**
+ * 확대축소
+ * params : up - 확대
+ * params : down - 축소
+ */
+setZoom = (params) => {
+	if (params == 'up') {
+		map.getView().setZoom(map.getView().getZoom() + 1);
+	} else {
+		map.getView().setZoom(map.getView().getZoom() - 1);
+	}
+}
+
+/**
+ * 지도이동
+ * params : previous - 이전
+ * params : next - 다음
+ */
+setMove = (params) => {
+
+}
+
+/**
+ * 이미지저장, 인쇄
+ */
 function imgSavePrint(actionType) {
 	if (actionType == "image") {
 		if (!confirm("이미지로 저장하시겠습니까?")) {
 			return;
 		}
-		fnExcelDownLoadLog(actionType);
 	}
 
 	getMapImgUrl().then(function(_imgDataUrl) {
@@ -305,7 +166,7 @@ function imgSavePrint(actionType) {
 
 		}
 		else if (actionType == "print") {
-			var printWindow = window.open('', '지도 출력', `width=${wavus.map.getMap().getSize()[0]}, height=${wavus.map.getMap().getSize()[1]}`);
+			var printWindow = window.open('', '지도 출력', `width=${map.getMap().getSize()[0]}, height=${map.getMap().getSize()[1]}`);
 
 			if (printWindow == null) {
 				popupAlertConfirm('alert', 'alertChk', '팝업 차단을 해제 후 다시 시도해 주시기 바랍니다.');
@@ -342,7 +203,7 @@ function imgSavePrint(actionType) {
 				<body style="width:100%; height:100%; margin:0px; padding:0px;">
 					<div class="t-header_print" style="padding:15px 20px;">
 						<div class="t-logo_print">
-							<img src="../../../../images/layout/logo.png" alt="지역개발통합모니터링">
+							<img src="../../../../images/layout/logo.png" alt="">
 						</div>
 						<div class="t-input_pirnt"><input type="text" id="printText" placeholder="여기에 제목을 입력해 주세요.">
 						</div>

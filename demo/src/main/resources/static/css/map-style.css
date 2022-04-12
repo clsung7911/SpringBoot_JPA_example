@@ -27,7 +27,6 @@
 .right-area{position: absolute;top: 80px;right: 20px;}
 .right-area>ul,.has-depth>ul{margin-bottom: 10px;}
 .right-area>ul:last-child{margin-bottom: 0;}
-.right-area>ul>li{box-shadow: 2px 2px 5px rgb(80 80 166 / 20%);border-radius: 5px;background-color: #fff;float: none;border: 1px solid #5151a6;margin-bottom: 5px;}
 .right-area>ul>li.group{margin-bottom:0;border-radius:0;border-bottom:0;}
 
 .right-area>ul>li.group:last-child{border-bottom:1px solid #5151a6;border-radius:0 0 5px 5px}
@@ -52,31 +51,31 @@
 /* 아이콘 */
 .right-area a{background-repeat: no-repeat;background-position: center center;}
 
-/* 지도편집 */
-.right-area .map-edit{background-image: url(../images/map/b01.png);}
-/* 측정도구 */
-.right-area .map-range{background-image: url(../images/map/b02.png);}
-/* 그리기도구 */
-.right-area .map-drow{background-image: url(../images/map/b03.png);}
-/* 인쇄 */
-.right-area .map-print{background-image: url(../images/map/b04.png);}
-/* 배경지도 */
-.right-area .map-style{background-image: url(../images/map/b05.png);}
 /* 전체화면 */
 .right-area .map-all{background-image: url(../images/map/toolbar_h01.png);}
 /* 초기화 */
 .right-area .map-clear{background-image: url(../images/map/toolbar_h02.png);}
+/* 측정도구 */
+.right-area .map-range{background-image: url(../images/map/b02.png);}
+/* 그리기도구 */
+.right-area .map-draw{background-image: url(../images/map/b03.png);}
+/* 인쇄 */
+.right-area .map-print{background-image: url(../images/map/b04.png);}
+/* 배경지도 */
+.right-area .map-style{background-image: url(../images/map/b05.png);}
 /* 이동 */
 .right-area .map-pre{background-image: url(../images/map/toolbar_h07.png);}
 .right-area .map-post{background-image: url(../images/map/toolbar_h08.png);}
 /* 확대축소 */
 .right-area .map-zoom-up{background-image: url(../images/map/toolbar_h05.png);}
 .right-area .map-zoom-down{background-image: url(../images/map/toolbar_h06.png);}
+/* 지도편집 */
+.right-area .map-edit{background-image: url(../images/map/b01.png);}
 
 
 .right-area li.on .map-edit{background-image: url(../images/map/b01_ov.png);}
 .right-area li.on .map-range{background-image: url(../images/map/b02_ov.png);}
-.right-area li.on .map-drow{background-image: url(../images/map/b03_ov.png);}
+.right-area li.on .map-draw{background-image: url(../images/map/b03_ov.png);}
 .right-area li.on .map-print{background-image: url(../images/map/b04_ov.png);}
 .right-area li.on .map-style{background-image: url(../images/map/b05_ov.png);}
 .right-area li:hover .map-all{background-image: url(../images/map/toolbar_h01_ov.png);}
@@ -115,13 +114,13 @@
 .right-area .has-depth>.map-range + ul>li:nth-child(1):hover>a{background-image: url(../images/map/m0201_ov.png);}
 .right-area .has-depth>.map-range + ul>li:nth-child(2):hover>a{background-image: url(../images/map/m0202_ov.png);}
 
-.right-area .has-depth>.map-drow + ul>li:nth-child(1)>a{background-image: url(../images/map/m0301.png);}
-.right-area .has-depth>.map-drow + ul>li:nth-child(2)>a{background-image: url(../images/map/m0302.png);}
-.right-area .has-depth>.map-drow + ul>li:nth-child(3)>a{background-image: url(../images/map/m0303.png);}
+.right-area .has-depth>.map-draw + ul>li:nth-child(1)>a{background-image: url(../images/map/m0301.png);}
+.right-area .has-depth>.map-draw + ul>li:nth-child(2)>a{background-image: url(../images/map/m0302.png);}
+.right-area .has-depth>.map-draw + ul>li:nth-child(3)>a{background-image: url(../images/map/m0303.png);}
 
-.right-area .has-depth>.map-drow + ul>li:nth-child(1):hover>a{background-image: url(../images/map/m0301_ov.png);}
-.right-area .has-depth>.map-drow + ul>li:nth-child(2):hover>a{background-image: url(../images/map/m0302_ov.png);}
-.right-area .has-depth>.map-drow + ul>li:nth-child(3):hover>a{background-image: url(../images/map/m0303_ov.png);}
+.right-area .has-depth>.map-draw + ul>li:nth-child(1):hover>a{background-image: url(../images/map/m0301_ov.png);}
+.right-area .has-depth>.map-draw + ul>li:nth-child(2):hover>a{background-image: url(../images/map/m0302_ov.png);}
+.right-area .has-depth>.map-draw + ul>li:nth-child(3):hover>a{background-image: url(../images/map/m0303_ov.png);}
 
 .right-area .has-depth>.map-print + ul>li:nth-child(1)>a{background-image: url(../images/map/m0401.png);}
 .right-area .has-depth>.map-print + ul>li:nth-child(2)>a{background-image: url(../images/map/m0402.png);}

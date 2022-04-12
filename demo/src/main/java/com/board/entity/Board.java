@@ -31,15 +31,16 @@ import lombok.NoArgsConstructor;
 //혹시라도 클래스명과 테이블명이 다를 수밖에 없는 상황에서는 클래스 레벨에 @Table을 선언
 //@Table(name = "user_role")과 같이 name 속성을 이용해서 처리
 @Entity
-@SequenceGenerator(name="board_pk_generator", sequenceName = "board_pk", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name="board_pk_generator", sequenceName = "board_seq", initialValue = 1, allocationSize = 1)
 public class Board {
 
     @Id // PK임을 의미
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "board_pk_generator") // PK 생성시
-    private Integer id; // PK
+    private Integer boardId; // PK
     private String title; // 제목
     private String contents; // 내용
-    private String writer; // 작성자
+    private String userId; // 작성자ID
+    private String userNm; // 작성자명
     private int hits; // 조회 수
     private char delYn; // 삭제 여부
     private LocalDateTime registDt = LocalDateTime.now(); // 생성일
@@ -47,19 +48,20 @@ public class Board {
 
     //롬복에서 제공해주는 빌더라는 기능으로, 생성자 대신에 이용하는 패턴
     @Builder
-    public Board(String title, String contents, String writer, int hits, char delYn) {
+    public Board(String title, String contents, String userId, String userNm, int hits, char delYn) {
         this.title = title;
         this.contents = contents;
-        this.writer = writer;
+        this.userId = userId;
+        this.userNm = userNm;
         this.hits = hits;
         this.delYn = delYn;
     }
     
     //update 쿼리를 실행하는 로직이 없음 -> JPA에서는 영속성이란 컨텍스트라는 개념으로 자동 실행
-    public void update(String title, String contents, String writer) {
+    public void update(String title, String contents, String userId) {
     	this.title = title;
     	this.contents = contents;
-    	this.writer = writer;
+    	this.userId = userId;
     	this.updtDt = LocalDateTime.now();
     }
     
