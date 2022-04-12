@@ -1,34 +1,77 @@
 <!DOCTYPE html>
-<!--<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="~{layout/login_layout}">-->
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/login_layout}">
 
 <section layout:fragment="f-content">
 	<div class="login_wrapper" style="margin: calc(50vh - 193px) auto 0px;">
 		<h1><img th:src="@{/images/like.png}" width="50" height="auto" alt="demo" id="btn_loginHome"></h1>
-		<form method="post" th:action="@{/login}">
+		<form name="loginForm" method="post" th:action="@{/login}">
 			<div>
-				<input type="text" name="email" class="form-control" placeholder="email" autocomplete="off" required />
+				<input type="text" id="userId" name="userId" class="form-control" placeholder="사용자 ID"
+					autocomplete="off" required />
 			</div>
 			<div style="margin-bottom: 50px;">
-				<input type="password" name="password" class="form-control" placeholder="Password" autocomplete="off" required />
+				<input type="password" id="password" name="password" class="form-control" placeholder="비밀번호"
+					autocomplete="off" required />
 			</div>
 			<div>
-				<button type="button" class="btn btn-info btn-large form-control" id="btn_login">Login</button>
+				<button type="button" class="btn btn-info btn-large form-control" onclick="login();">Login</button>
 			</div>
 			<div>
-				<button type="button" class="btn btn-secondary btn-large form-control" id="btn_joinForm">Join</button>
+				<button type="button" class="btn btn-secondary btn-large form-control"
+					onclick="joinForm();">Join</button>
 			</div>
 		</form>
 		<hr class="separator" />
 		<div>
-			<h1>DEMO</h1>
-			<p>©2019 All Rights Reserved.</p>
+			<h1>HereIt</h1>
+			<p>©2022 clsung.</p>
 		</div>
 	</div>
 </section>
 
 <th:block layout:fragment="f-script">
 	<script>
+		/**@abstract
+		* 엔터 누를시 버튼 이벤트 활성화
+		*/
+		window.addEventListener('keyup', (e) => {
+			if (e.which == 13) {
+				login();
+			}
+		});
+
+		document.addEventListener("DOMContentLoaded", () => {
+
+		});
+
+		/**@abstract
+		* 로그인 이벤트
+		*/
+		login = () => {
+			let userId = document.getElementById('userId');
+			let userPw = document.getElementById('password');
+
+			if (userId.value == '') {
+				alert('사용자 ID를 입력하세요.');
+				userId.focus();
+				return false;
+			}
+
+			if (userPw.value == '') {
+				alert('사용자 비밀번호를 입력하세요.');
+				userPw.focus();
+				return false;
+			}
+
+			document.logionForm.submit();
+
+		}
+		/**@abstract
+		* 회원가입 이벤트
+		*/
+		joinForm = () => {
+			location.href = "[[@{/join}]]";
+		}
 		
 	</script>
 </th:block>
