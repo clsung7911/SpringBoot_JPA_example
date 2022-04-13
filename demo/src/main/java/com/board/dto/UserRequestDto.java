@@ -1,6 +1,6 @@
 package com.board.dto;
 
-import com.board.entity.User;
+import com.board.entity.UserInfo;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,16 +15,17 @@ public class UserRequestDto {
 	private String userEmail; // 이메일
 	private String userTel; // 전화번호
 	private char useAt; // 사용여부
+	private char sex; // 성별
 	
-	public User toEntity() {
-		return User.builder()
+	public UserInfo toEntity() {
+		return UserInfo.builder()
 				.userId(userId)
-				.userId(userId)
-				.userId(userId)
-				.userId(userId)
-				.userId(userId)
-				.userId(userId)
-				.useAt(useAt)
+				.userPw(userPw)
+				.userNm(userNm)
+				.userEmail(userEmail)
+				.userTel(userTel)
+				.useAt('Y')
+				.sex(sex)
 				.build();
 	}
 }

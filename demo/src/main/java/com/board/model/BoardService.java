@@ -17,6 +17,7 @@ import com.board.entity.Board;
 import com.board.entity.BoardRepository;
 import com.board.exception.CustomException;
 import com.board.exception.ErrorCode;
+import com.board.mapper.BoardMapper;
 import com.board.paging.CommonPaging;
 import com.board.paging.Pagination;
 
