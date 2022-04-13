@@ -44,16 +44,25 @@ public class MainController {
 	 */
 	@ResponseBody
 	@PostMapping(value = "/join")
-	public Map<String, Object> join(@RequestBody UserRequestDto user){
+	public Map<String, Object> join(@RequestBody final UserRequestDto user){
 		Map<String, Object> response = new HashMap<>();
 		
-		if(userService.findByUserId(user.getUserId()).isPresent()) {
+		if(userService.findById(user.getUserId()).isPresent()) {
 			response.put("duplicate", true);
 			return response;
 		}
 		
 		response.put("success", userService.join(user) != null ? true : false);
 		return response;
-		
+	}
+	/**
+	 * 로그인 후 리스트로 이동
+	 * @param value
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping(value = "/login")
+	public String loginList(@RequestBody final UserRequestDto user){
+		return "/board/list";
 	}
 }

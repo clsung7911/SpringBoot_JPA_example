@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/login_layout}">
-
+<meta th:name="_csrf" th:content="${_csrf.token}" />
+<meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
 <th:block layout:fragment="f-title">회원가입</th:block>
 
 <section layout:fragment="f-content">
 	<div class="login_wrapper" style="margin: calc(50vh - 320px) auto 0px;">
 		<h1><img th:src="@{/images/like.png}" width="50" height="auto" alt="demo" id="btn_loginHome"></h1>
-		<form method="post" th:action="@{/join}">
+		<form name="joinForm" method="post" th:action="@{/join}">
 			<div>
 				<input type="text" id="userId" name="userId" class="form-control" placeholder="아이디" autocomplete="off"
 					required />
 			</div>
 			<div>
-				<input type="password" id="password" name="password" class="form-control" placeholder="비밀번호"
+				<input type="password" id="userPw" name="userPw" class="form-control" placeholder="비밀번호"
 					autocomplete="off" required />
 			</div>
 			<div>
-				<input type="text" name="name" class="form-control" placeholder="이름" autocomplete="off" required />
+				<input type="text" id="userNm" name="userNm" class="form-control" placeholder="이름" autocomplete="off"
+					required />
 			</div>
 			<div>
 				<input type="email" id="userEmail" name="userEmail" class="form-control" placeholder="이메일"
@@ -33,18 +35,19 @@
 					<label class="custom-control-label" for="sex-2">여</label>
 				</div>
 			</div>
-			<div>
-				<input type="text" name="birthDate" class="form-control" placeholder="생년월일(yyMMdd)"
-					autocomplete="off" />
-			</div>
+			<!--			<div>-->
+			<!--				<input type="text" name="birthDate" class="form-control" placeholder="생년월일(yyMMdd)" autocomplete="off" />-->
+			<!--			</div>-->
 			<div style="margin-bottom: 50px;">
-				<input type="text" name="phoneNumber" class="form-control" placeholder="전화번호(-생략)" autocomplete="off" />
+				<input type="text" id="userTel" name="userTel" class="form-control" placeholder="전화번호(-생략)"
+					autocomplete="off" />
 			</div>
 			<div>
 				<button type="submit" class="btn btn-dark btn-large form-control">Join</button>
 			</div>
 			<div>
-				<button type="button" class="btn btn-secondary btn-large form-control" id="btn_loginForm">Back</button>
+				<button type="button" class="btn btn-secondary btn-large form-control"
+					onclick="backLogin();">Back</button>
 			</div>
 		</form>
 		<hr class="separator" />
@@ -57,20 +60,52 @@
 
 <th:block layout:fragment="f-script">
 	<script>
+		/**
+		 * 로그인 페이지로 이동 
+		 */
+		backLogin = () => {
+			location.href = document.referrer;
+		}
+
 		document.addEventListener("DOMContentLoaded", () => {
-			selector.on("submit", function (e) {
-				let _form = this.closest("form");
-				let formData = _form.serializeObject();
-				//$("section div:eq(0)").append('<div id="d-spin" class="spinner-border">');
-			});
+			/**
+			 * 회원가입 클릭 이벤트 
+			 */
+			$("form").on("submit", function (e) {
+				e.preventDefault();
+				var $form = $(this).closest("form");
+				var formData = $form.serializeObject();
 
-			axios.post(_form.attr("action"), JSON.stringify(formData)).then(response => {
+				$("section div:eq(0)").append('<div id="d-spin" class="spinner-border">');
 
-			}).catch(error => {
+				$.ajax({
+					type: $form.attr("method"),
+					dataType: 'json',
+					contentType: "application/json",
+					data: JSON.stringify(formData),
+					url: $form.attr("action"),
+					//beforeSend: function (xhr) {
+					//	xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
+					//},
+					success: function (res) {
+						$("#d-spin").remove();
+						if (res.duplicate) {
+							$.notify("중복된 아이디 입니다.", "error");
+							$("input[name='email']").val("");
+							$("input[name='email']").focus();
+						} else if (res.success) {
+							$.notify("회원 가입 완료되었습니다.");
+							setTimeout(function () {window.location = document.referrer}, 800);
+						} else {
+							$("#d-spin").hide();
+							$.notify("crud fail");
+						}
+					},
+					error: function (error) {
+						alert(error.errorMsg);
+					}
+				});
 
-			});
-			document.getElementById("btn_loginForm").on("click", function () {
-				location.href = document.referrer;
 			});
 		});
 	</script>

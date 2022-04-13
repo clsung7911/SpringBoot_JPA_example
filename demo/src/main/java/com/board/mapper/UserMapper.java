@@ -9,5 +9,5 @@ import com.board.entity.UserInfo;
 @Mapper
 public interface UserMapper {
 
-	public Optional<UserInfo> findById(String id);
+	public Optional<UserInfo> findById(String userId);
 }
